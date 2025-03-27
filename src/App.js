@@ -1,24 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import Player from './components/Player'
+import GameBoard from "./components/GameBoard";
+import {useState} from "react";
+import Log from "./components/Log";
 
 function App() {
+    const [ActivePlayer, SetActivePlayer] = useState('X')
+    function handlePlayer(player) {
+        SetActivePlayer((currentPlayer) => currentPlayer === 'X' ? 'O' : 'X')
+    }
+    const [gameTurns, setGameTurns] = useState([])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <main>
+        <section id="game-container">
+          <ol id="players" className="highlight-player">
+              <Player isActive={ActivePlayer === 'X'} inisialNama={"Player 1"} playerSymbol={"X"}/>
+              <Player isActive={ActivePlayer === 'O'} inisialNama={"Player 2"} playerSymbol={"O"}/>
+          </ol>
+            <GameBoard onPlayer={handlePlayer} activePlayerSymbol={ActivePlayer} />
+        </section>
+          <Log/>
+      </main>
   );
 }
 
